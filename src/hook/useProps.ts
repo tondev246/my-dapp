@@ -104,35 +104,34 @@ const useProps = (): Props => {
 
       // send the transaction up to the network
       const signer = provider.getSigner();
-    const check =  await signer.checkTransaction(tx)
-      await signer
-        .signTransaction(check)
-        .then(async (result) => {
-          if (result) {
-            const transaction = await signer.sendTransaction(tx);
-            createLog({
-              status: 'info',
-              method: 'eth_sendTransaction',
-              message: 'Đang gửi...',
-            });
-            const receipt = await provider.waitForTransaction(transaction.hash);
-            createLog({
-              status: 'info',
-              method: 'eth_sendTransaction',
-              message: `Sending transaction: ${JSON.stringify(transaction)}
+
+      const transaction = await signer.sendTransaction(tx);
+      createLog({
+        status: 'info',
+        method: 'eth_sendTransaction',
+        message: 'Đang gửi...',
+      });
+      const receipt = await provider.waitForTransaction(transaction.hash);
+      createLog({
+        status: 'info',
+        method: 'eth_sendTransaction',
+        message: `Sending transaction: ${JSON.stringify(transaction)}
              Status transaction: ${receipt.status === 1 ? 'Thành công' : 'Thất bại'}`,
-            });
-            const txReceipt = await transaction.wait(1); // 1 is number of blocks to be confirmed before returning the receipt
-            createLog({
-              status: 'success',
-              method: 'eth_sendTransaction',
-              message: `TX included: ${JSON.stringify(txReceipt)}`,
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      });
+     try{
+      const txReceipt = await transaction.wait(1); // 1 is number of blocks to be confirmed before returning the receipt
+      createLog({
+        status: 'success',
+        method: 'eth_sendTransaction',
+        message: `TX included: ${JSON.stringify(txReceipt)}`,
+      });
+     }catch{
+      createLog({
+        status:'error',
+        method:'eth_sendTransaction',
+        message:'Lỗi'
+      })
+     }
     } catch (error) {
       createLog({
         status: 'error',

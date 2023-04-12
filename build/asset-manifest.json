@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "/static/js/main.c0998af6.js",
+    "static/media/LogoPanda.png": "/static/media/LogoPanda.b704cdb7914e786fd456.png",
+    "index.html": "/index.html",
+    "main.c0998af6.js.map": "/static/js/main.c0998af6.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.c0998af6.js"
+  ]
+}
